@@ -1,0 +1,64 @@
+{% extends '@BlogWeb/layout.html.twig' %}
+
+{% block breadcrumb_after_homepage %}<li><a href="">Matej Kuna - Curriculum vitae</a></li>{% endblock %}
+
+{% block title %}Hire a profesional | Curriculum vitae{% endblock %}
+
+{% block content %}
+    <h1>Curriculum vitae</h1>
+
+    <h2>Quick contact: +421905748407</h2>
+    Download my <a href="/bundles/blogweb/cv/cv.pdf" target="_blank">curriculum vitae</a>
+
+    {% if show_salary %}
+    <h2>Carrier & Salary preferences</h2>
+    <ul>
+        <li>position: <strong>Backend developer</strong></li>
+        <li>languages: <strong>no prefs</strong>, skilled in PHP, MySQL & JavaScript, but ready to use & learn new ones</li>
+        <li>salary: 3000 EUR (Bratislava/monthly/gross) or 40000 GBP (UK/yearly/gross)</li>
+    </ul>
+    {% endif %}
+
+    <h2>See my profiles / useful links</h2>
+    <ul>
+        <li>Social networks
+            <ul>
+                <li><a href="https://www.linkedin.com/in/matej-kuna-068a0a3b/" target="_blank">Matej Kuna on LinkedIn</a></li>
+                <li><a href="https://github.com/MatokUK" target="_blank">Matej Kuna on GitHub</a></li>
+            </ul>
+        </li>
+    </ul>
+    <ul>
+        <li>University Thesis</li>
+        <ul>
+            <li><a href="https://www.vutbr.cz/studenti/zav-prace/detail/24966" target="_blank">Bachelors thesis</a></li>
+            <li><a href="https://www.vutbr.cz/studenti/zav-prace/detail/34516" target="_blank">Masters thesis</a></li>
+        </ul>
+    </ul>
+
+    <ul>
+        <li>Coding Challenges
+            <ul>
+                <li><a href="https://www.hackerrank.com/mat_kuna" target="_blank">HackerRank</a>
+                    <ul>
+                        <li>Sep 2018 - joined</li>
+                        <li>Dec 2018 - top #5000</li>
+                        <li>Feb 2019 - top #3000</li>
+                    </ul>
+                </li>
+                <li><a href="https://www.codewars.com/users/MatokUK" target="_blank">CodeWars</a></li>
+                <li><a href="https://adventofcode.com/2018" target="_blank">Advent of Code 2018</a> and some <a href="https://github.com/MatokUK/aoc2018" target="_blank">Java solutions</a></li>
+            </ul>
+        </li>
+    </ul>
+
+    <h2>Profile screenshots from online coding challenges</h2>
+    <img src="{{ asset('bundles/blogweb/img/hr_feb_2019.png') }}" alt="Hacker Rank" style="width: 100%"/>
+    <strong>Hacker Rank Feb 2019</strong>
+    <br><br><br>
+    <img src="{{ asset('bundles/blogweb/img/cw_feb_2019.png') }}" alt="Code Wars" style="width: 100%" />
+    <strong>Code Wars Feb 2019</strong>
+    <br><br><br>
+
+{% endblock %}
+

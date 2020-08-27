@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<routes xmlns="http://symfony.com/schema/routing"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+
+  <!--  <route id="blog_comming_soon" path="/">
+        <default key="_controller">BlogWebBundle:Blog:countdown</default>
+    </route>
+    <route id="blog_comming_soon_subscribe" path="/subscribe">
+        <default key="_controller">BlogWebBundle:Blog:subscribe</default>
+    </route>-->
+
+    <!-- homepage -->
+    <route id="blog_homepage" path="/" controller="Matok\Bundle\BlogWebBundle\Controller\BlogController::homepage" />
+
+    <route id="blog_contact" path="/contact" controller="Matok\Bundle\BlogWebBundle\Controller\ContactController::contact" />
+    <route id="hire" path="/hire-professional-matok" controller="Matok\Bundle\BlogWebBundle\Controller\ContactController::hire" />
+    <route id="curriculum" path="/cv" controller="Matok\Bundle\BlogWebBundle\Controller\ContactController::curriculum" />
+
+    <!-- list by tags/search -->
+    <route id="blog_list_by_tag" path="/tag/{tagId}/{slug}" controller="Matok\Bundle\BlogWebBundle\Controller\BlogController::tagList">
+        <requirement key="tagId">\d+</requirement>
+    </route>
+
+    <route id="blog_search_result" path="/search/{search}" controller="Matok\Bundle\BlogWebBundle\Controller\SearchController::search">
+        <requirement key="search">.*</requirement>
+    </route>
+
+    <!-- article -->
+    <route id="blog_article" path="/{articleId}/{slug}" controller="Matok\Bundle\BlogWebBundle\Controller\ArticleController::detail">
+        <requirement key="articleId">\d+</requirement>
+    </route>
+
+
+    <!-- fragments -->
+    <route id="blog_tags" path="/f/tags" controller="Matok\Bundle\BlogWebBundle\Controller\BlogFragmentController::tags" />
+    <route id="blog_newest_articles" path="/f/newest" controller="Matok\Bundle\BlogWebBundle\Controller\BlogFragmentController::newestArticles" />
+    <route id="blog_fragment_stats" path="/f/stats" controller="Matok\Bundle\BlogWebBundle\Controller\BlogFragmentController::stats" />
+    <route id="blog_fragment_search" path="/f/search" controller="Matok\Bundle\BlogWebBundle\Controller\BlogFragmentController::searchForm" />
+</routes>

@@ -1,0 +1,4 @@
+<h3>Tags</h3>
+{% for tag in tags %}
+    <a href="{{ url('blog_list_by_tag', {tagId: tag.tagId, slug: tag.slug}) }}" class="btn btn-default btn-lg btn-tag">{{ tag.title }}</a>
+{% endfor %}

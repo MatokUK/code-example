@@ -1,0 +1,38 @@
+{% block image_with_preview_widget %}
+    {{ form_widget(form.upload) }}
+    {{ form_widget(form.image_id) }}
+    <div class="{{ form.vars.css_wrapper }}">
+        {% if form.vars.data.image_id is defined and form.vars.data.image_id is not empty %}
+            <img src="{{ mm_image(form.vars.data.image_id) }}" />
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block image_center_picker_widget %}
+    <img src="{{ mm_image(image_id) }}" class="js-center-point" width="90%" data-original-height="{{ original_height }}" data-original-width="{{ original_width }}" />
+    {{ form_widget(form.centerX) }}
+    {{ form_widget(form.centerY) }}
+    <script>
+    $(function() {
+        $("img.js-center-point").click(function(e) {
+            var circle = '<div style="width: 100px; height: 100px; border-radius: 50%; border: 1px solid salmon; position: absolute;" class="js-center-point"></div>';
+            var offset = $(this).offset();
+            var relativeX = (e.pageX - offset.left);
+            var relativeY = (e.pageY - offset.top);
+            var centerX = (relativeX / this.clientWidth) * $(this).data('original-width');
+            var centerY = (relativeY / this.clientHeight) * $(this).data('original-height');
+
+            $('input[name*="centerX"]').val(Math.round(centerX));
+            $('input[name*="centerY"]').val(Math.round(centerY));
+
+            if ($('div.js-center-point').length == 0) {
+                $(this).after(circle);
+            }
+
+           $('div.js-center-point').css('left', relativeX - $('div.js-center-point').height() / 2);
+        //    $('div.js-center-point').css('top', relativeY - $('div.js-center-point').width() / 2);
+        });
+    });
+    </script>
+
+{% endblock %}

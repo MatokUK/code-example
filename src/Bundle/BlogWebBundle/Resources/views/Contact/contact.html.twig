@@ -1,0 +1,21 @@
+{% extends '@BlogWeb/layout.html.twig' %}
+
+{% block breadcrumb_after_homepage %}<li><a href="">Contact</a></li>{% endblock %}
+
+{% block content %}
+    <h1>Contact</h1>
+
+    Programming is my hobby. I will be happy to help you with simple problem / question. {#In case your company need complex solution you can hire me.
+    Prague, Brno, Bratislava, Budapest, Krakow#}
+
+    <div class="col-md-7 col-md-offset-2">
+    {{ form_start(contact_form, { attr: {class: 'contact-form'}}) }}
+        {{ form_widget(contact_form['subject'], { attr: {class: 'form-control input-lg'}}) }}
+        {{ form_widget(contact_form['email'], { attr: {class: 'form-control input-lg'}}) }}
+        {{ form_widget(contact_form['message'], { attr: {class: 'form-control input-lg'}}) }}
+        <input type="submit" value="Send" class="pull-right btn btn-lg btn-submit">
+    {{ form_end(contact_form) }}
+    </div>
+
+{% endblock %}
+

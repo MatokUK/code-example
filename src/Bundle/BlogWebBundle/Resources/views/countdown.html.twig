@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Matok Blog about Symfony, Web Development, PHP</title>
+    <!-- for-mobile-apps -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="Matok Blog, Symfony, PHP, Web Development" />
+    <meta property="og:image" content="{{ absolute_url(asset('bundles/blogweb/countdown/skull-and-crossbones.jpg')) }}" />
+    <!-- //for-mobile-apps -->
+    <link href='//fonts.googleapis.com/css?family=Audiowide' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+    <link href="{{ asset('bundles/blogweb/countdown/css/jquery.classycountdown.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('bundles/blogweb/countdown/css/style.css') }}" rel="stylesheet" type="text/css" media="all" />
+    <style>
+        form input {
+            float: left;
+        }
+
+        input[type=submit] {
+            margin: 0 0 0 1em !important;
+        }
+    </style>
+</head>
+<body>
+<div class="content">
+    <h1>Blog Coming Soon</h1>
+    <div class="main">
+        <div id="countdown9" class="ClassyCountdownDemo"></div>
+
+        <div class="subscribe">
+            <h2>Subscribe And Be The First To Know</h2>
+            <div class="contact-form">
+                <form action="#" method="post">
+                    <input type="email" value="Email" name="Email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email';}" required="">
+                    <input type="submit" value="Subscribe">
+                </form>
+            </div>
+            <br>
+            <br>
+            <h2 id="js-ajax-subscribe-result"></h2>
+
+        </div>
+    </div>
+    <p class="copy_rights"></p>
+</div>
+<script src="{{ asset('bundles/blogweb/countdown/js/jquery.min.js') }}"></script>
+<script src="{{ asset('bundles/blogweb/countdown/js/jquery.knob.js') }}"></script>
+<script src="{{ asset('bundles/blogweb/countdown/js/jquery.throttle.js') }}"></script>
+<script src="{{ asset('bundles/blogweb/countdown/js/jquery.classycountdown.js') }}"></script>
+<script>
+    $(document).ready(function() {
+        $('#countdown9').ClassyCountdown({
+            end: $.now() + {{ deadline }},
+            now: $.now(),
+            labels: true,
+            style: {
+                element: "",
+                textResponsive: .5,
+                days: {
+                    gauge: {
+                        thickness: .10,
+                        bgColor: "rgba(0,0,0,0)",
+                        fgColor: "#1abc9c",
+                        lineCap: 'round'
+                    },
+                    textCSS: 'font-weight:300; color:#fff;'
+                },
+                hours: {
+                    gauge: {
+                        thickness: .10,
+                        bgColor: "rgba(0,0,0,0)",
+                        fgColor: "#05BEF6",
+                        lineCap: 'round'
+                    },
+                    textCSS: ' font-weight:300; color:#fff;'
+                },
+                minutes: {
+                    gauge: {
+                        thickness: .10,
+                        bgColor: "rgba(0,0,0,0)",
+                        fgColor: "#8e44ad",
+                        lineCap: 'round'
+                    },
+                    textCSS: ' font-weight:300; color:#fff;'
+                },
+                seconds: {
+                    gauge: {
+                        thickness: .10,
+                        bgColor: "rgba(0,0,0,0)",
+                        fgColor: "#f39c12",
+                        lineCap: 'round'
+                    },
+                    textCSS: ' font-weight:300; color:#fff;'
+                }
+
+            },
+            onEndCallback: function() {
+                 console.log("Ta-Daaaa");
+            }
+        });
+
+        $('form').on('submit', function(e) {
+            e.preventDefault();
+
+            $.post('/subscribe', {email: $('input[type="email"]').val()}, function (data) {
+                if (data['result']) {
+                    $('#js-ajax-subscribe-result').html('Your email was added!').css('color', '#1abc9c').css('textShadow','-1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000');
+                } else {
+                    $('#js-ajax-subscribe-result').html('Ups... wrong email format?').css('color', 'indianred').css('textShadow','-1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000');
+                }
+            });
+
+            return false;
+        });
+    });
+</script>
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-101144452-1', 'auto');
+    ga('send', 'pageview');
+
+</script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="matok_media.form.type.image_with_preview" class="Matok\Bundle\MediaBundle\Form\Type\ImageWithPreviewType">
+            <argument type="service" id="matok_media.storage"></argument>
+            <argument type="service" id="matok_media.config.article_images"></argument>
+            <tag name="form.type" />
+        </service>
+
+        <!-- focus -->
+        <service id="matok_media.form.type.image_center_picker" class="Matok\Bundle\MediaBundle\Form\Type\ImageCenterPickerType">
+            <argument type="service" id="matok_media.storage"></argument>
+            <tag name="form.type" />
+        </service>
+    </services>
+</container>

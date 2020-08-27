@@ -1,0 +1,108 @@
+{% block article_preview_widget %}
+    <a href="" id="js-blog-admin-article-preview" data-target-url="{{ url('admin_matok_blogadmin_article_preview') }}">Preview</a>
+
+    <script>
+        $('#js-blog-admin-article-preview').on('click', function() {
+            console.log('click');
+            var formData = $(this).closest('form').serialize();
+            console.log(formData);
+
+            $.post($(this).data('target-url'), formData, function(response) {
+               console.log(response);
+            });
+            return false;
+        });
+
+    $('#form').submit(function(e) {
+
+    e.preventDefault();
+   // var url = "{ { path('YOUR_PATH') } }";
+    var formSerialize = $(this).serialize();
+
+    $.post($(this).data('target-url'), formSerialize, function(response) {
+    //your callback here
+    alert(response);
+    }, 'JSON');
+    });
+    </script>
+
+{% endblock %}
+
+{% block article_preview_link_widget %}
+    {%- if form.parent.vars.value.articleId %}
+    <a href="{{ url('admin_matok_blogadmin_article_preview_concept', {articleId: form.parent.vars.value.articleId}) }}" target="_preview">preview</a>
+    {%- endif %}
+{% endblock %}
+
+
+{%- block slider_attributes -%}
+    id="{{ id }}" name="{{ full_name }}"
+    {%- if disabled %} disabled="disabled"{% endif -%}
+    {%- if required %} required="required"{% endif -%}
+    {%- for attrname, attrvalue in attr -%}
+        {{- " " -}}
+        {%- if attrname in ['placeholder', 'title'] -%}
+            {{- attrname }}="{{ translation_domain is same as(false) ? attrvalue : attrvalue|trans({}, translation_domain) }}"
+        {%- elseif attrvalue is same as(true) -%}
+            {{- attrname }}="{{ attrname }}"
+        {%- elseif attrvalue is not same as(false) -%}
+            {{- attrname }}="{{ attrvalue }}"
+        {%- endif -%}
+    {%- endfor -%}
+{% endblock %}
+
+
+{% block slider_row %}
+    <div id="slider-holder-{{ id }}" class="row">
+        <div class="js-slider-val col-md-2" style="float: right">{{ form.vars.value }}0%</div>
+        <strong class="js-tag-label col-md-4"></strong>
+        <input type="text" class="col-md-6" {{ block('slider_attributes') }} {% if value is not empty %}value="{{ value }}" data-slider-value="{{ value }}"{% endif %}/>
+    </div>
+{% endblock %}
+
+{% block slider_collection_widget %}
+    <div id="slider-holder">
+        {{- form_widget(form) -}}
+    </div>
+
+    <script>
+        var mirrorInputId = '{{ form.parent.children[mirror_input].vars['id']  }}';
+        var collectionId = '{{ form.vars['id'] }}';
+        var prototype = $('#' + collectionId).data('prototype');
+        console.log(prototype);
+
+        $('#' + mirrorInputId).on('change', function (e) {
+            if (e.added) {
+                var slider = e.added;
+                var newElement = prototype.replace(/__name__/g, slider.id);
+                newElement = newElement.replace(/(<strong[^>]+>).*(<\/strong>)/, '$1' + e.added.text + '$2');
+
+
+                $('#slider-holder').append(newElement);
+                var el_id = $(newElement).find('input').attr('id');
+
+                $('#' + el_id).bootstrapSlider({});
+            } else if (e.removed) {
+               $('#slider-holder-' + e.removed.id).remove();
+                var removeElement = prototype.replace(/__name__/g, e.removed.id)
+                var removeId = $(removeElement).attr('id');
+                $('#' + removeId).remove();
+            }
+        });
+
+        //trigger
+       $('#slider-holder').find('input').each(function(idx, obj) {
+           $(obj).bootstrapSlider();
+
+           var tagId = $(obj).attr('name').match(/([0-9]+)\]$/);;
+           $(obj).parent().find('strong').text($('#' + mirrorInputId + ' option[value="' + tagId[1] + '"]').text());
+        });
+
+
+        $("#slider-holder").on("change", '.slider-horizontal', function(slideEvt) {
+            $(slideEvt.target).parent().find('.js-slider-val').html(slideEvt.value.newValue + '0%');
+        });
+
+
+    </script>
+{% endblock %}

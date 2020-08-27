@@ -1,0 +1,83 @@
+{% extends '@BlogWeb/layout.html.twig' %}
+
+{% block title %}{{ article.title }}{% endblock %}
+
+{% block meta_tags %}
+    {{ parent() }}
+
+    {% block meta_description %}<meta name="description" content="{{ article.perex }}">{% endblock %}
+    <meta name="keywords" content="{% for tag in tags %}{{ tag.title }}{% if not loop.last %}, {% endif %}{% endfor %}">
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="{{ article.title }}" />
+    <meta property="og:description" content="{{ article.perex }}" />
+    {% if article.topimageid is not empty %}
+        <meta property="og:image" content={{ mm_image(article.topImagePath) }} />
+    {% endif %}
+{% endblock %}
+
+{% block breadcrumb_after_homepage %}
+    {% if primary_tag is not empty %}
+    <li><a href="{{ url('blog_list_by_tag', {'tagId': primary_tag.tagId, 'slug': primary_tag.slug}) }}">{{ primary_tag.title }}</a></li>
+    {% endif %}
+    <li><a href="#">{{ article.title }}</a></li>
+{% endblock %}
+
+{% block content %}
+    {% import '@BlogWeb/Macro/stat.html.twig' as stat %}
+    {% import '@BlogWeb/Macro/tag.html.twig' as tag_macro %}
+
+    <article class="blog-post">
+        <h1>{{ article.title }}</h1>
+        <div class="article-top-image">
+            {% if article.topImagePath is not empty %}
+                <img src="{{ mm_image(article.topImagePath, '740x280') }}" alt="article image"/>
+            {% endif %}
+            <div class="article-meta-info">
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span><span class="article-meta-info-data">Matej Kuna aka Maťok</span>
+                <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span><span class="article-meta-info-data">{{ article.publishedat|date('j F Y') }}</span>
+                <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span><span class="article-meta-info-data">{#{{ article.read_count }}#}</span>
+                {#{% if article.usefull %}<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span><span class="article-meta-info-data">{{ article.usefull }}</span>{% endif %}#}
+            </div>
+        </div>
+
+        <div class="article-tags">
+            <strong>Tags:</strong> {% for tag in tags %} <a href="{{ url('blog_list_by_tag', {tagId: tag.tag.tagId, slug: tag.tag.slug}) }}" class="btn btn-default" style="{{ tag_macro.size(tag.ratio, tags|length) }}"><span>{{ tag.tag.title }} {% if tags|length > 1 %}<span class="tag-ratio">({{ tag.ratio }}%)</span>{% endif %}</span></a>{% endfor %}
+        </div>
+
+        {{ article.content|convert_bb_code }}
+
+        <div class="article-signature">
+            <hr>
+            <div>If you like this article then mark it as helpful to let others know it's worth to read. Otherwise leave me a feedback/comment and we can talk about it. </div>
+            <br>
+            <em>I'm foreigner. Where I live my friends call me Maťok.</em>
+            <div class="clearfix"/>
+            <br>
+            <hr>
+        </div>
+
+        {% include '@BlogWeb/Article/serie.html.twig' %}
+
+        <div class="article-controls">
+            {#<a href="#" class="js-ajax btn btn-default" data-method="post" data-target="{{ path('stat_article_helpful', {'articleId' : article.article_id}) }}" data-success-text="Thanks for feedback!">Helpful <span class="glyphicon glyphicon-thumbs-up js-ajax-spinner" aria-hidden="true"></span></a>#}
+            <a href="#" class="btn btn-default">Comments - Coming Soon <span class="glyphicon glyphicon-comment" aria-hidden="true"></span></a>
+        </div>
+    </article>
+
+    {{ stat.stat_article(article.articleid) }}
+{% endblock %}
+
+
+{% block javascripts %}
+    <script src="{{ asset('bundles/blogweb/anchor/anchor.min.js') }}"></script>
+    <script src="{{ asset('/bundles/blogweb/highlight/highlight.pack.js') }}"></script>
+    <script>
+        hljs.initHighlightingOnLoad();
+        anchors.add('article h2');
+    </script>
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('/bundles/blogweb/highlight/styles/rainbow.css') }}">
+{% endblock %}

@@ -1,0 +1,8 @@
+{% extends '@blog/ListArticle/list.html.twig' %}
+
+{% block title %}Articles about {{ tag.title }}{% endblock %}
+
+{% block breadcrumb_after_homepage %}<li><a href="{{ url('blog_list_by_tag', {tagId: tag.tagId, slug: tag.slug}) }}">{{ tag.title }}</a></li>{% endblock %}
+
+{% block content_tile %}<h1>List of articles with {{ tag.title }} tag</h1>{% endblock %}
+

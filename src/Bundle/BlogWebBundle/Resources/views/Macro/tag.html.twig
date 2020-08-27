@@ -1,0 +1,9 @@
+{% macro size(ratio, count) %}
+    {%- if count == 2 -%}
+        {%- if ratio > 50 -%}
+            font-size: {{ (ratio - 50)/2 + 100 }}%
+        {%- elseif ratio < 50 -%}
+            font-size: {{ 100 - (50 - ratio)/2 }}%
+        {%- endif -%}
+    {%- endif -%}
+{% endmacro %}

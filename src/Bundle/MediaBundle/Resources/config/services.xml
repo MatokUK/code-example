@@ -1,0 +1,46 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <parameters>
+        <parameter key="matok_media.hasher.class">Matok\Bundle\MediaBundle\Hasher\BasicHasher</parameter>
+    </parameters>
+    <services>
+
+
+
+            <service id="Matok\Bundle\MediaBundle\Repository\MediaRepository" class="Matok\Bundle\MediaBundle\Repository\MediaRepository">
+                <argument type="service" id="database_connection" />
+            </service>
+
+
+
+            <service id="matok_media.hasher" class="%matok_media.hasher.class%" public="false">
+
+            </service>
+
+            <service id="Matok\Bundle\MediaBundle\Image\Dimension" class="Matok\Bundle\MediaBundle\Image\Dimension">
+                <argument></argument> <!-- filled dynamicly -->
+                <argument type="service" id="Matok\Bundle\MediaBundle\Repository\MediaRepository" />
+                <argument type="service" id="Matok\Bundle\MediaBundle\DirBalancer\BasicDirBalancer" />
+            </service>
+
+
+            <service id="matok_media.storage" class="Matok\Bundle\MediaBundle\Storage\Storage">
+                <argument type="service" id="Matok\Bundle\MediaBundle\DirBalancer\BasicDirBalancer" />
+                <argument type="service" id="matok_media.hasher" />
+                <argument type="service" id="Matok\Bundle\MediaBundle\Repository\MediaRepository" />
+                <argument type="service" id="matok_media.config.article_images" />
+            </service>
+
+
+            <service id="matok_media.twig_extension" class="Matok\Bundle\MediaBundle\Twig\Extension" public="false">
+                <argument type="service" id="Matok\Bundle\MediaBundle\Repository\MediaRepository" />
+                <argument type="service" id="Matok\Bundle\MediaBundle\DirBalancer\BasicDirBalancer" />
+                <argument type="service" id="Matok\Bundle\MediaBundle\Image\Dimension" />
+                <tag name="twig.extension" />
+            </service>
+        </services>
+
+</container>

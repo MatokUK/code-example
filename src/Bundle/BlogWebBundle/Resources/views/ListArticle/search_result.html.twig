@@ -1,0 +1,10 @@
+{% extends '@blog/ListArticle/list.html.twig' %}
+
+{% block title %}Search result for {{ search }}{% endblock %}
+
+{% block breadcrumb_after_homepage %}<li><a href="">Search</a></li>{% endblock %}
+
+{% block content_tile %}<h1>Search result for "{{ search }}"</h1>{% endblock %}
+
+ {% block nothin_in_list %}<p>Sorry, search result is empty.</p>{% endblock %}
+

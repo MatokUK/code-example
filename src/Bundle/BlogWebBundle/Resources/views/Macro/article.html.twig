@@ -1,0 +1,7 @@
+{% macro publish_date(date) %}
+    {{ date|date('j F Y') }}
+{% endmacro %}
+
+{% macro publish_date_full(date) %}
+    {{ date|date('j F Y H:i:s') }}
+{% endmacro %}

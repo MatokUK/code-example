@@ -1,0 +1,26 @@
+<?php
+    ob_start();
+?>
+<html>
+    <body>
+        <form method="post" action="/cookie.php">
+            <input type="text" name="debug_cookie_value">
+            <input type="submit">
+        </form>
+
+    </body>
+</html>
+
+
+<?php
+if (isset($_POST['debug_cookie_value'])) {
+    if (!empty($_POST['debug_cookie_value']))  {
+        // set value
+        setcookie('matok_debug', $_POST['debug_cookie_value'], time() + 3600*24*7, '/', '', false, true);
+    } else {
+        // unset value
+        setcookie('matok_debug', 1, time() - 3600);
+    }
+}
+
+ob_end_flush();

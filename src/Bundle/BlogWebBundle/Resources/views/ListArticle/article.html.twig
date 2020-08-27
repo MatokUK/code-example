@@ -1,0 +1,18 @@
+<div class="col-sm-6 col-md-6">
+    <div class="thumbnail">
+        <div class="list-item-header">
+            {% if article.topImagePath is not empty %}
+                {% set image = images[article.top_image_id] %}
+                <a href="{{ url('blog_article', {articleId: article.articleId, slug: article.slug}) }}"><img src="{{ mm_image(article.topImagePath, 180) }}" /></a>
+            {% endif %}
+            <h2><a href="{{ url('blog_article', {articleId: article.articleId, slug: article.slug}) }}">{{ article.title }}</a></h2>
+            {{ article.published_at|date('j F Y') }}
+            <hr>
+        </div>
+        {{ article.perex }}
+
+        <div class="clearfix">
+            <a href="{{ url('blog_article', {articleId: article.articleId, slug: article.slug}) }}" class="btn btn-read-more pull-right">read more</a>
+        </div>
+    </div>
+</div>

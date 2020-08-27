@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}{% endblock %} - Matok's Blog about PHP & Symfony</title>
+    {% block stylesheets %}{% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    <link href="{{ asset('bundles/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/blogweb/css/main.css') }}" rel="stylesheet">
+    {% block meta_tags %}
+        {% block meta_author %}<meta name="author" content="Matej Kuna">{% endblock %}
+        {% block meta_description %}<meta name="description" content="Matok's Blog about PHP, Symfony, Clean Code, Programming">{% endblock %}
+    {% endblock %}
+
+    <script>
+        dataLayer = [];
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-WX62T49');</script>
+    <!-- End Google Tag Manager -->
+</head>
+<body>
+    <header>
+        <div class="top-menu">
+            <div class="container">
+                <span id="blog-title">Matok's PHP Blog</span>
+               {# <nav class="pull-right tales-nav">
+                    <div class="collapse navbar-collapse">
+                        <ul class="nav nav-pills navbar-nav">
+                            <li class="dropdown active">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    Blog
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">About</a>
+                            </li>
+                            <li>
+                                <a href="#">Credits</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>#}
+            </div>
+        </div>
+        <div class="breadcrumb-holder">
+            <div class="container">
+                <div id="search"><a href="#" class="js-search-form-toggle">Find article <span class="glyphicon glyphicon-search"></span></a></div>
+                {% block breadcrumb %}
+                <ol class="breadcrumb">
+                    <li><a href="{{ url('blog_homepage') }}">Blog</a></li>
+                    {% block breadcrumb_after_homepage %}{% endblock %}
+                </ol>
+                {% endblock %}
+            </div>
+        </div>
+    </header>
+    <div class="container">
+
+        {% for flash_message in app.session.flashBag.get('success') %}
+            <div class="alert alert-info">
+                {{ flash_message }}
+            </div>
+        {% endfor %}
+
+        <div class="row">
+            <div class="col-md-8">
+            {% block content %}
+            {% endblock %}
+            </div>
+            <div class="col-md-4 right-pannel">
+                {{ render(path('blog_newest_articles')) }}
+                <br>
+                {{ render(path('blog_tags')) }}
+
+                <h3>Master your skills</h3>
+                <p>What I know I learn from books. You can buy good literature here:
+                    <a href="http://www.gorila.sk/t/home.php?ref_id=usr-307195" target="_blank">Gorila - Slovak book shop</a>
+                </p>
+
+
+            </div>
+        </div>
+    </div>
+    <footer id="footer">
+        <div class="container">
+        <div class="row">
+            <div class="col-xs-6 col-lg-4">
+                <h3><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Contact me</h3>
+                <span>I will be happy for any feedback and criticism. If you need help don't hesitate to <a href="{{ url('blog_contact') }}">contact me</a>.</span>
+                <br>
+                <span>Do you want <a href="{{ url('hire') }}">hire a professional</a>?</span>
+            </div>
+            <div class="col-xs-6 col-lg-4">
+                <h3><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Profiles</h3>
+                <a href="https://www.codewars.com/users/MatokUK">
+                    <img src="https://www.codewars.com/users/MatokUK/badges/small" alt="CodeWars"/>
+                </a>
+            </div>
+            <div class="col-xs-6 col-lg-4">
+                <h3><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Highlights</h3>
+                {{ render(path('blog_fragment_stats')) }}
+            </div>
+        </div>
+        </div>
+    </footer>
+
+    {{ render(path('blog_fragment_search')) }}
+
+    <script src="{{ asset('bundles/jquery/jquery-3.1.1.min.js') }}"></script>
+    <script src="{{ asset('bundles/blogweb/js/main.js') }}"></script>
+    <script src="{{ asset('bundles/blogweb/js/search.js') }}"></script>
+    {% block javascripts %}{% endblock %}
+
+    <script>
+        {% if app.debug %}
+        /*
+        {% endif %}
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-101144452-1', 'auto');
+        ga('send', 'pageview');
+
+        {% if app.debug %}
+        */
+        {% endif %}
+    </script>
+</body>
+</html>

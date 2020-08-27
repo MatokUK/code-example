@@ -1,0 +1,11 @@
+{% macro stat_article(article_id) %}
+    <script>
+        (function() {
+            var src = '{{ url('stat_article_read', {articleId : article_id}) }}';
+            src += '?tm=' + Date.now();
+            src += '&r=' +  Math.floor(100000 * Math.random());
+            var image = new Image();
+            image.src = src;
+        })();
+    </script>
+{% endmacro %}

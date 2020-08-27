@@ -1,0 +1,13 @@
+{% for object in admin.datagrid.results %}
+    {%- set class -%}
+        {%- if object.status == constant('Matok\\Bundle\\BlogWebBundle\\Entity\\ArticleStatus::PUBLISHED') -%}
+            {%- if object.publishedAt > date() -%}success{%- endif -%}
+        {%- else -%}
+            warning
+        {%- endif -%}
+    {%- endset -%}
+
+    <tr class="{{ class }}">
+        {% include admin.getTemplate('inner_list_row') %}
+    </tr>
+{% endfor %}

@@ -1,0 +1,17 @@
+{% if article.serie %}
+    <h2> Read more from {{ article.serie.title }}</h2>
+
+    {% for article in serie %}
+        <div class="related-article">
+            <div class="pull-right">
+                <img src="{{ mm_image(article.topimageid, '', '100x100') }}" alt="article image"/>
+                {{ article.publishedAt|date('j F Y') }}
+            </div>
+            <h3><a href="{{ url('blog_article', {slug: article.slug, articleId: article.articleId}) }}">{{ article.title }}</a></h3>
+            {{ article.perex }}
+            <a href="{{ url('blog_article', {articleId: article.articleId, slug: article.slug}) }}" class="btn btn-read-more">read more</a>
+
+            <div class="clearfix"></div>
+        </div>
+    {% endfor %}
+{% endif %}
